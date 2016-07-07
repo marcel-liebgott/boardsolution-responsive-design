@@ -1,0 +1,59 @@
+{include "inc_delete_message.htm"}
+
+<form method="post" action="{target_url}">
+	<div class="panel panel-default">
+		<div class="panel-heading">{glocale.lang('subscribed_topics')}</div>
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-left cell-stat-4x" colspan="3">{glocale.lang('thread')}</th>
+						<th class="cell-stat text-center">{glocale.lang('subscribe_date')}</th>
+						<th class="cell-mini-stat text-center">{glocale.lang('lastpost')}</th>
+						<th class="cell-mini-stat text-center">{glocale.lang('delete')}</th>
+					</tr>
+				</head>
+				<tbody>
+					{if num == 0}
+					<tr>
+						<td colspan="6" class="text-center">{glocale.lang('no_subscribed_topics')}</td>
+					</tr>
+					{endif}
+					{loop topics as index => topic}
+						<tr>
+							<td class="text-center cell-stat">
+								<img src="{topic:topic_status:important_image}" title="{topic:topic_status:important_title}" alt="{topic:topic_status:important_title}" />
+								<img src="{topic:topic_status:hot_image}" title="{topic:topic_status:hot_title}" alt="{topic:topic_status:hot_title}" /><br />
+								<img src="{topic:topic_status:closed_image}" title="{topic:topic_status:closed_title}" alt="{topic:topic_status:closed_title}" />
+								<img src="{topic:topic_status:moved_image}" title="{topic:topic_status:moved_title}" alt="{topic:topic_status:moved_title}" />
+							</td>
+							<td class="text-center cell-stat">{topic:topic_symbol}</td>
+							<td class="text-left">
+								{topic:topic_name}<br />
+								<small">{topic:position}</small>
+							</td>
+							<td class="text-center cell-stat-2x">{topic:subscribe_date}</td>
+							<td class="text-center cell-stat-2x">{topic:last_post}</td>
+							<td class="text-center" onclick="var cb = document.getElementById('subscr_{index}'); cb.checked = cb.checked ? false : true;">
+								<input type="checkbox" id="subscr_{index}" name="delete[]" value="{topic:topic_id}" onclick="this.checked = this.checked ? false : true;" />
+							</td>
+						</tr>
+					{endloop}
+				</tbody>
+				<tfooter>
+					<td colspan="6" class="text-right">
+						<a href="Javascript:invertSelection('subscr_');">{glocale.lang('invertmark')}</a>
+					</td>
+				</tfooter>
+			</table>
+		</div>
+	</div>
+
+	<div class="col-lg-12 col-sm-12 col-xs-12 text-center">
+		<div class="btn-group" role="group">
+			<input type="submit" class="btn btn-default" value="{glocale.lang('delete')}" />
+		</div>
+	</div>
+</form>
+
+{include "inc_pagination.htm"}

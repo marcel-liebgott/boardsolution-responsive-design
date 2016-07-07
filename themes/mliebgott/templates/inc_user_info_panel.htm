@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Informationen</div>
+	<div class="panel-body">
+		{glocale.lang('welcome')}, <b>{if gisloggedin}{gusername}{else}{glocale.lang('guest')}{endif}</b>!
+		{if gisloggedin}
+			<a href="{gurl.simple_url(-1,'&amp;$URL_AT=$ACTION_LOGOUT','&amp;',true)}">{glocale.lang('logout')}</a>
+		{endif}
+		<br>
+		{glocale.lang('lastlogin')}: 
+			{if lastlogin}
+				{glastlogin}
+			{else}
+				<i>{glocale.lang('notavailable')}</i>
+			{endif}
+		<br>
+		{if genable_portal}
+			<a href="{gurl.build_portal_url()}" title="{unread_news_title}">{glocale.lang('portal')}</a>
+			({if unread_news_count > 0}<span class="bs_unread">{unread_news_count}</span>{else}0{endif})
+			<br>
+		{endif}
+		
+		{if gisloggedin && guserenablepm}
+			<a title="{glocale.lang('privatemsgs')} ({unread_pm_count} {glocale.lang('newmsgs')})"
+				href="{gurl.simple_url('userprofile','&amp;$URL_SUB=pmoverview')}">{glocale.lang('privatemsgs')}</a>
+			({if unread_pm_count > 0}<span class="bs_unread">{unread_pm_count}</span>{else}0{endif})
+			<br>
+		{endif}
+		
+		<a title="{unread_topics_title}" href="{gurl.simple_url('unread')}">{glocale.lang('unread_threads')}</a>
+		({if unread_topic_count > 0}<span class="bs_unread">{unread_topic_count}</span>
+			<a href="{first_unread_url}"><img src="{guser.get_theme_item_path('images/unread/first_unread_post.gif')}"
+				alt="" /></a>{else}0{endif})
+	</div>
+</div>

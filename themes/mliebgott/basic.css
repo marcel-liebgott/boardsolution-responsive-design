@@ -1,0 +1,288 @@
+a:hover{
+	text-decoration: none !important;
+}
+
+.nopadding{
+	padding: 0 !important;
+}
+
+.nomargin{
+	margin: 0 !important;
+}
+
+.no-margin-left{
+	margin-left: 0px;
+}
+
+.no-margin-right{
+	margin-right: 0px;
+}
+
+.no-padding-left{
+	padding-left: 0px !important;
+}
+
+.no-padding-right{
+	padding-right: 0px !important;
+}
+
+.padding-left-10{
+	padding-left: 10px;
+}
+
+.cell-mini-stat{
+	width: 1em !important;
+}
+
+.cell-stat{
+  width: 6em !important;
+}
+
+.cell-stat-2x{
+  width: 14em !important;
+}
+
+.cell-stat-3x{
+	width: 20em !important;
+}
+
+.cell-stat-4x{
+	width: 26em !important;
+}
+
+.table > tbody > tr > td.vertical-center{
+	vertical-align: middle;
+}
+
+.table > tbody > tr > td{
+	border-top: 0px !important;
+}
+
+.heading{
+	padding: 0 0 10px;
+	margin-bottom: 15px;
+	background-color: #637591 !important;
+	background-image: url(images/topic.gif) !important;
+	background-repeat: repeat-x !important;	
+}
+
+.panel-heading{
+	background-color: #637591 !important;
+	background-image: url(images/topic.gif) !important;
+	background-repeat: repeat-x !important;
+}
+
+.panel-heading a{
+	color: #fff !important;
+}
+
+.top5{
+	margin-top: 5px;
+}
+
+.top10{
+	margin-top: 10px;
+}
+
+.top15{
+	margin-top: 15px;
+}
+
+.top20{
+	margin-top: 20px;
+}
+
+.nav-user-element{
+	width: 300px;
+}
+
+.link-options{
+	color: #000;
+}
+
+.post-links a{
+	margin-left: 10px;
+}
+
+.button-with-addon{
+	position: relative;
+	display: table;
+	border-collapse: separate;
+}
+
+.button-with-addon i{
+	border-right: 0 !important;
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-weight: 400;
+	line-height: 1;
+	color: #555;
+	text-align: center;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	width: 1%;
+	min-width: 14px !important;
+	white-space: nowrap;
+	display: table-cell;
+	vertical-align: middle;
+	height: 14px;
+}
+
+.button-with-addon .btn{
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.bottom-options{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.bottom-options li{
+	width: auto;
+	float: left;
+	display: table;
+	margin-right: 10px;
+}
+
+.bottom-options li:last-child{
+	margin-right: 0;
+}
+
+.userdetails-options{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.userdetails-options li{
+	width: auto;
+	display: table;
+	float: left;
+	margin-right: 10px;
+}
+
+.user-status{
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	border: 0;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.online{
+	background-color: #008000;
+}
+
+.offline{
+	background-color: red;
+}
+
+.user-online{
+	border: 3px solid #008000;
+}
+
+.user-offline{
+	border: 3px solid red;
+}
+
+.show-tr{
+	display: table-row !important;
+}
+
+.hide-tr{
+	display: none;
+}
+
+.forums-name{
+	background-color: #f9f9f9;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+.forums-name i.fa{
+	float: left;
+	margin: 12px 0px;
+}
+
+.forums-name h1, h2, h3, h4, h5, h6{
+	margin-left: 20px;
+}
+
+.user-notification-badge{
+	margin-right: 10px;
+	background-color: #d9534f !important;
+}
+
+.progress-bar{
+	-webkit-transition: none !important;
+	transition: none !important;
+}
+
+td > .progress{
+	margin-bottom: 0 !important;
+}
+
+td.calendar-week-arrow{
+	padding-top: 8px !important;
+	padding-left: 8px !important;
+}
+
+.calendar-day-desc{
+	padding-top: 0px !important;
+}
+
+.calendar > tbody > tr{
+	height: 150px !important;
+}
+
+.calendar > tbody > tr > td.calendar-day{
+	padding-top: 5px !important;
+	padding-left: 0px !important;
+}
+
+table.no-margin-bottom{
+	margin-bottom: 0px !important;
+}
+
+.footer{
+	background-color: #f5f5f5;
+	border-radius: 4px;
+	padding: 12px 8px 8px 8px;
+	border: 1px solid #ddd;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+	margin-top: 10px;
+}
+
+textarea{
+	resize: vertical;
+}
+
+.no-wrap{
+	word-wrap: normal !important;
+}
+
+div.form-group > label.control-label{
+	word-wrap: break-word;
+}
+
+div.form-group > div{
+	display: block;
+}
+
+/**
+ * navigation description
+ */
+.nav-desc{
+	display: block;
+	padding: 10px 15px;
+	line-height: 1.42;
+	color: #777;
+	white-space: nowrap;
+	background-color: #ddd;
+}

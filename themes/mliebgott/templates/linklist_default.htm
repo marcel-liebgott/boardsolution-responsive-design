@@ -1,0 +1,94 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+	{if module_error == false}
+		{if num > 0}
+		<div class="panel panel-default">
+			<div class="panel-heading">{glocale.lang('linklist')}</div>
+			<div class="panel-body">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th width="25%" class="bs_coldesc" align="left">{glocale.lang('url')}</th>
+							<th width="20%" class="bs_coldesc">{glocale.lang('added')}</th>
+							<th width="7%" class="bs_coldesc">{glocale.lang('clicks')}</th>
+							<th width="38%" class="bs_coldesc">{glocale.lang('rating')}</th>
+							<th width="10%" class="bs_coldesc">{glocale.lang('details')}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{loop links as data}
+							{if data:show_category}
+								<tr>
+									<td colspan="5" class="bs_coldesc">{glocale.lang('category')} &raquo; <u>{data:category}</u></td>
+								</tr>
+							{endif}
+						<tr>
+							<td colspan="5" class="bs_main">
+								<table class="table no-margin-bottom">
+									<tr>
+										<td width="25%">
+											<a target="_blank" href="{data:redirect_url}">{data:link_url}</a>
+										</td>										
+										<td width="20%" align="center">
+											{data:link_date} {glocale.lang('of')} {data:user_name}
+										</td>
+										<td width="7%" align="center">{data:clicks}</td>
+										<td width="38%">
+											<input type="number" class="rating" id="link_rating_{data:id}" data-size="xs" data-value="{data:vote_rating_result}">
+										</td>
+										<td width="10%" align="center">
+											<i class="fa fa-chevron-down collapse-div" id="{data:index}" ></i>
+										</td>
+									</tr>
+								</table>
+								<div id="div_{data:index}" class="collapse out">
+									<table class="table">
+										<tbody>
+											<tr>
+												<td width="52%">{data:description}</td>
+												<td width="48%" valign="top">
+													{if data:can_vote}
+														<form method="post" action="{gurl.simple_url('linklist','&amp;$URL_ID='~data:id~'&amp;$URL_AT=$ACTION_VOTE_LINK','&amp;',true)}">
+															<div class="col-sm-4 no-padding-left">
+																<label for="link_rating_{data:id}">{glocale.lang('yourvote')}:</label>
+																<select class="form-control" name="link_rating_{data:id}" id="link_rating_{data:id}">
+																	{loop data:vote_options_rating as key => value}
+																		<option value="{key"}>{value}</option>
+																	{endloop}
+																</select>
+																<br>
+																<button type="submit" role="button" class="btn btn-default">{glocale.lang('vote')}</button>
+															</div>
+														</form>
+													{else}
+														{glocale.lang('linklist_already_voted')}
+													{endif}
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+						{endloop}
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="bs_padtop">
+		{include "inc_pagination.htm"}
+		</div>
+
+	{endif}
+		<br />
+
+		{if show_add_link}
+			<a class="bs_button_big" href="{add_link_url}">{glocale.lang('addnewlink')}</a>
+			<br style="clear: both;" />
+		{endif}
+	{endif}
+{endif}
+
+{include "inc_footer.htm"}

@@ -1,0 +1,223 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+   {if module_error == false}
+      {if latest_topics_top && sub_forum}
+         {include "inc_topics.htm"}
+         <br />
+      {endif}
+
+      {if sub_forum}
+         <div class="bs_padbottom">
+            {include "inc_forums.htm"}
+         </div>
+      {endif}
+
+      {if contains_topics}
+         {include "inc_topic_action_js.htm"}
+
+         {include "inc_topics.htm"}
+
+            <div class="col-lg-4 col-sm-4 col-xs-12">
+               <div class="panel panel-default">
+                  <div class="panel-heading">Admin Option</div>
+                  <div class="panel-body">
+                     {if display_topic_actions}
+                        <div class="input-group">
+                           <span class="input-group-addon" id="action">{glocale.lang('options')}:</span>
+                           {topic_action_combo}
+                        </div>
+                        <button class="btn btn-default btn-xs" role="button" type="submit" onclick="performModAction(getModActionURL());" class="form-control">
+                           {glocale.lang('performaction')}
+                        </button>
+                        <br>
+                        <small>
+                           <a href="javascript:invertSelection('id_',0);">{glocale.lang('invertmark')}</a>
+                        </small>
+                     {else}
+                        &nbsp;
+                     {endif}
+                  </div>
+               </div>
+               
+				<div class="panel panel-default">
+					<div class="panel-heading">Aktionen</div>
+					<div class="panel-body">
+						<ul class="bottom-options">
+							{if display_topic}
+								<li>
+									<div class="button-with-addon">
+										<i class="fa fa-comment"></i>
+										<a title="{glocale.lang('createnewthread')}" href="{gurl.simple_url('new_topic','&amp;$URL_FID='~fid)}">
+											<button class="btn btn-default btn-sm">
+												{glocale.lang('newthread')}
+											</button>
+										</a>
+									</div>
+								</li>
+							{endif}
+							{if display_poll}
+								<li>
+									<div class="button-with-addon">
+										<i class="fa fa-bar-chart"></i>
+										<a title="{glocale.lang('createnewpoll')}" href="{gurl.simple_url('new_topic','&amp;$URL_FID='~fid)}">
+											<button class="btn btn-default btn-sm">
+												{glocale.lang('newpoll')}
+											</button>
+										</a>
+									</div>
+								</li>
+							{endif}
+							{if display_event}
+								<li>
+									<div class="button-with-addon">
+										<i class="fa fa-calendar"></i>
+										<a title="{glocale.lang('createnewevent')}" href="{gurl.simple_url('new_event','&amp;$URL_FID='~fid)}">
+											<button class="btn btn-default btn-sm">
+												{glocale.lang('newevent')}
+											</button>
+										</a>
+									</div>
+								</li>
+							{endif}
+							
+							{if mark_read_url != ""}
+								<li>
+									<div class="button-with-addon">
+										<i class="fa fa-check"></i>
+										<a title="{glocale.lang('mark_forum_read')}" href="{mark_read_url}">
+											<button class="btn btn-default btn-sm">
+												{glocale.lang('mark_forum_read')}
+											</button>
+										</a>
+									</div>
+								</li>
+							{endif}
+							
+							{if subscr_forum_url != ""}
+								<li>
+									<div class="button-with-addon">
+										<i class="fa fa-bell"></i>
+										<a title="{glocale.lang('subscribe_forum')}" href="{subscr_forum_url}">
+											<button class="btn btn-default btn-sm">
+												{glocale.lang('subscribe_forum')}
+											</button>
+										</a>
+									</div>
+								</li>
+							{endif}
+						</ul>
+                  </div>
+               </div>
+               
+               {if contains_topics}
+                  <div class="panel panel-default">
+                     <div class="panel-heading">{glocale.lang('options')}</div>
+                     <div class="panel-body">
+                        <div class="hidden-xs">
+                           <form class="form-horizontal" method="get" action="{php_self}">
+								<input type="hidden" name="{action_param}" value="topics" />
+								<input type="hidden" name="{fid_param}" value="{fid}" />
+								{loop hidden_fields as k => v}
+									<input type="hidden" name="{k}" value="{v}" />
+								{endloop}
+								<ul class="bottom-options">
+									<div class="button-with-addon">
+										<i class="fa fa-columns"></i>
+										<select name="{order_array_ins:_name}" id="{order_array_ins:_name}">
+											{loop order_array_ins as k => v}
+												{if k != "_name" && k != "_default"}
+													<option value="{k}"{if k == order_array_ins:_default}selected="selected"{endif}>{v}</option>
+												{endif}
+											{endloop}
+										</select>
+									</div>
+								<li>
+							  </ul>
+                              {if number_of_threads > 0}
+								<select name="{order_array_ins:_name}" id="{order_array_ins:_name}">
+									{loop order_array_ins as k => v}
+										{if k != "_name" && k != "_default"}
+											<option value="{k}"{if k == order_array_ins:_default}selected="selected"{endif}>{v}</option>
+										{endif}
+									{endloop}
+								</select>
+                                 <div class="form-group">
+                                    <label class="control-label col-sm-3 small" id="column">Spalte:</label>
+                                    <div class="col-sm-9">
+                                       {order_ins}
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class="control-label col-sm-3 small" id="column">Sortierung:</label>
+                                    <div class="col-sm-9">
+                                       {ascdesc_ins}
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class="control-label col-sm-3 small" id="column">{glocale.lang('threadsperpage')}:</label>
+                                    <div class="col-sm-6">
+                                       {tps_ins}
+                                    </div>
+                                    <button class="btn btn-default" type="submit"><small>{glocale.lang('show')}</small></button>
+                                 </div>
+                              {endif}
+                           </form>
+                           <hr>
+                           <div class="col-lg-6 hidden-xs hidden-sm small">
+                              <img src="{guser.get_theme_item_path('images/thread_status/important_en.gif')}" alt="" />
+                              <img src="{guser.get_theme_item_path('images/thread_status/important_dis.gif')}" alt="" /> =
+                              {glocale.lang('important_desc')}
+                              <br>
+                              <img src="{guser.get_theme_item_path('images/thread_status/hot_en.gif')}" alt="" />
+                              <img src="{guser.get_theme_item_path('images/thread_status/hot_dis.gif')}" alt="" /> =
+                              {glocale.lang('hot_desc')}
+                              <br>
+                              <img src="{guser.get_theme_item_path('images/thread_status/closed_en.gif')}" alt="" />
+                              <img src="{guser.get_theme_item_path('images/thread_status/closed_dis.gif')}" alt="" /> =
+                              {glocale.lang('closed_desc')}
+                              <br>
+                              <img src="{guser.get_theme_item_path('images/thread_status/moved_en.gif')}" alt="" />
+                              <img src="{guser.get_theme_item_path('images/thread_status/moved_dis.gif')}" alt="" /> =
+                              {glocale.lang('moved_desc')}
+                              <br>
+                              <img src="{guser.get_theme_item_path('images/thread_status/read_explain.gif')}" alt="" />
+                              <img src="{guser.get_theme_item_path('images/thread_status/unread_explain.gif')}" alt="" /> =
+                              {glocale.lang('unread_desc')}
+                           </div>
+                           <div class="col-lg-6 hidden-xs hidden-sm small">
+                              <b>{glocale.lang('youroptions')}</b>
+                              <br>
+                              {loop options as option}
+                                 {option}<br />
+                              {endloop}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               {endif}
+            </div>
+         </div>
+      {else}
+         {include "inc_topics.htm"}
+      {endif}
+
+      <!--
+      {if latest_topics_bottom && sub_forum}
+         <div class="bs_padtop">
+            {include "inc_topics.htm"}
+         </div>
+      {endif}
+      -->
+
+      <!--
+      {if view_useronline_list}
+         <div class="bs_padtop">
+            {include "inc_online_user.htm"}
+         </div>
+      {endif}
+      -->
+   {endif}
+{endif}
+
+{include "inc_footer.htm"}

@@ -1,0 +1,55 @@
+{include "inc_delete_message.htm"}
+
+<form method="post" action="{target_url}">
+	<div class="panel panel-default">
+		<div class="panel-heading">{glocale.lang('subscribed_topics')}</div>
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-left cell-stat-4x">{glocale.lang('thread')}</th>
+						<th class="cell-stat text-center">{glocale.lang('subscribe_date')}</th>
+						<th class="cell-mini-stat text-center">{glocale.lang('lastpost')}</th>
+						<th class="cell-mini-stat text-center">{glocale.lang('delete')}</th>
+					</tr>
+				</head>
+				<tbody>
+					{if num == 0}
+					<tr>
+						<td colspan="4" align="center" class="bs_main">{glocale.lang('no_subscribed_forums')}</td>
+					</tr>
+					{endif}
+					{loop forums as index => forum}
+						<tr>
+							<td class="bs_main">{forum:position}</td>
+							<td class="bs_main" align="center">{forum:subscribe_date}</td>
+							<td class="bs_main" align="center">{forum:last_post}</td>
+							<td class="bs_main" align="center"
+									onclick="var cb = document.getElementById('subscr_{index}'); cb.checked = cb.checked ? false : true;">
+							<input type="checkbox" id="subscr_{index}" name="delete[]" value="{forum:id}"
+										 onclick="this.checked = this.checked ? false : true;" />
+							</td>
+						</tr>
+					{endloop}
+				</tbody>
+				<tfooter>
+					<td colspan="4" class="text-right">
+						<a href="Javascript:invertSelection('subscr_');">{glocale.lang('invertmark')}</a>
+					</td>
+				</tfooter>
+			</table>
+		</div>
+	</div>
+	
+	<div class="col-lg-12 col-sm-12 col-xs-12 text-center">
+		<div class="btn-group" role="group">
+			<input type="submit" class="btn btn-default" value="{glocale.lang('delete')}" />
+		</div>
+	</div>
+</form>
+
+{include "inc_pagination.htm"}
+
+<div class="bs_padtop_big" align="right">
+	<a href="{subscribe_all_url}">{glocale.lang('subscribe_to_all_forums')}</a>
+</div>

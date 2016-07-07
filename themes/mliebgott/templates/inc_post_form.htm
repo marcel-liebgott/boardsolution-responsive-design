@@ -1,0 +1,120 @@
+	{if number == 1}
+		{if gisloggedin == false}
+			<div class="row padding-left-10">
+				<div class="col-lg-4">
+					<div class="input-group" role="group">
+						<span class="input-group-addon">{glocale.lang('yourname')}:</span>
+						<input type="text" class="form-control" name="user_name" size="30" maxlength="{user_maxlength}" value="{user_name_value}"/>
+					</div>
+					<div class="input-group" role="group">
+						<span class="input-group-addon">{glocale.lang('youremail')}:</span>
+						<input type="text" name="email_adr" size="40" value="{email_value}" class="form-control"/>
+					</div>
+					{if enable_security_code}
+						<div class="media">
+							<div class="media-left">
+								<img src="{security_code_img}" style="padding-bottom: 5px; cursor: pointer;" onclick="reloadImage(this);" alt="{glocale.lang('reload_sec_image')}" title="{glocale.lang('reload_sec_image')}" />
+							</div>
+							<div class="media-body">
+								<h4 class="media-heading">{glocale.lang('security_code')}:</h4>
+								{glocale.lang('security_code_desc')}
+								<br>
+								<input type="text"  name="{sec_code_field}" size="15" maxlength="10" class="form-control"/>
+							</div>
+						</div>
+					{endif}
+				</div>
+			</div>
+		{endif}
+	{endif}
+	
+	<div class="form-group clearfix" group="group">
+		<label class="col-sm-3 col-xs-4 control-label no-padding-left">{post_title}</label>
+		<div class="col-sm-9 col-xs-8 no-padding-left" style="margin-left: -15px;">
+			<ul class="text-static">
+				<li>{bbcode_activated}</li>
+				<li>{smileys_activated}</li>
+				<li>{glocale.lang('html_not_activated')}</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row padding-left-10">
+		{if number == 1}
+			<script type="text/javascript" src="{gjs.get_file('src/bbcode.js')}"></script>
+			<script type="text/javascript" src="{gjs.get_file('src/ajax_get_post_form.js')}"></script>
+			<script type="text/javascript">
+				<!--
+				var BBCodeModes = new Array();
+				var postForms = new Array();
+				function BS_refresh_text()
+				{
+					for(var no in BBCodeModes)
+					{
+						if(BBCodeModes[no] == 'applet')
+						{
+							var applet = document.getElementById('bbcode_area' + no);
+							var text = '';
+							// the IE seems not to be able to call self-written methods of the applet.
+							// therefore we use toString to get the text. that works :) 
+							if(applet.toString || typeof applet.toString == 'function')
+								text = applet.toString();
+							document.getElementById('hiddenText' + no).value = text;
+						}
+					}
+				}
+				//-->
+			</script>
+		{endif}
+					
+		<script type="text/javascript">
+			<!--
+				BBCodeModes['{number}'] = "{bbcode_mode}";
+				postForms['{number}'] = new BS_getPostFormAJAXConstr(
+					'post_form_{number}','bbcode_area{number}','{gpath}','{get_post_form_url}'
+				);
+			//-->
+		</script>
+					
+		<div class="hidden-sm hidden-xs col-lg-12 row no-padding-left">
+			<div class="col-lg-3">
+				<div class="input-group" role="group">
+					<span class="input-group-addon">
+						<input type="radio" name="bbcode_mode_{number}" id="bbcode_mode_simple_{number}" 
+							onclick="changeBBCodeMode({number},'simple',postForms['{number}']);" value="simple"{bb_si_checked} />
+					</span>
+					<input readonly value="{glocale.lang('bbcode_mode_simple')}" class="form-control" style="width: 250px;"/>
+				</div>
+			</div>
+			{if bbcode_enabled}
+				<div class="col-lg-3">
+					<div class="input-group" role="group">
+						<span class="input-group-addon">
+							<input type="radio" name="bbcode_mode_{number}" id="bbcode_mode_advanced_{number}" 
+								onclick="changeBBCodeMode({number},'advanced',postForms['{number}']);" value="advanced"{bb_ad_checked} />
+						</span>
+						<input readonly value="{glocale.lang('bbcode_mode_advanced')}" class="form-control" style="width: 250px;"/>
+					</div>
+				</div>
+			{endif}
+			{if applet_enabled}
+				<div class="col-lg-3">
+					<div class="input-group" role="group">
+						<span class="input-group-addon">
+							<input type="radio" name="bbcode_mode_{number}" id="bbcode_mode_applet_{number}" 
+								onclick="changeBBCodeMode({number},'applet',postForms['{number}']);" value="advanced"{bb_app_checked} />
+						</span>
+						<input readonly value="{glocale.lang('bbcode_mode_applet')}" class="form-control" style="width: 250px;"/>
+					</div>
+				</div>
+			{endif}
+		</div>
+	</div>
+	
+	<div id="post_form_{number}" style="margin-top: 10px;">
+		{textarea}
+	</div>
+	
+	{toggle_smbb}
+	
+	{include "inc_attachments.htm"}

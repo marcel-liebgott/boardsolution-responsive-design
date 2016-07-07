@@ -1,0 +1,106 @@
+{include "inc_delete_message.htm"}
+
+<div class="panel panel-default">
+	<div class="panel-heading">{event_title}</div>
+	<div class="panel-body">
+		<table class="table">
+			<tbody>
+				<tr>
+					<td class="cell-stat-2x">
+						<b>{glocale.lang('location')}:</b>
+					</td>
+					<td>
+						{location}
+					</td>
+				</tr>
+				<tr>
+					<td class="cell-stat-2x">
+						<b>{glocale.lang('begin')}:</b>
+					</td>
+					<td>
+						{event_begin}
+					</td>
+				</tr>
+				<tr>
+					<td class="cell-stat-2x">
+						<b>{glocale.lang('end')}:</b>
+					</td>
+					<td>
+						{if event_end == 'open'}
+							<i>{glocale.lang('openend')}</i>
+						{else}
+							{event_end}
+						{endif}
+					</td>
+				</tr>
+				<tr>
+					<td class="cell-stat-2x">
+						<b>{glocale.lang('description')}:</b>
+					</td>
+					<td>
+						{description}
+					</td>
+				</tr>
+				{if announcements_enabled}
+					<tr>
+						<td class="cell-stat-2x">
+							<b>{glocale.lang('announcements')}:</b>
+						</td>
+						<td>
+							<div class="row col-lg-6 col-sm-6 col-xs-12">
+								<table class="table">
+									<tr>
+										<td class="no-padding-left no-padding-right">
+											<u>{glocale.lang('application_deadline')}:</u>
+										</td>
+										<td>{timeout}</td>
+									</tr>
+									<tr>
+										<td class="no-padding-left no-padding-right" valign="top">
+											<u>{glocale.lang('announced')}:</u>
+										</td>
+										<td>
+											{total_announcements} / 
+											{if max_announcements == 0}
+												<span title="{glocale.lang('unlimited')}">&infin;</span>:
+											{else}
+												{max_announcements}:
+											{endif}
+											<div style="padding-top: 5px;">{announcement_list}</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							{if can_announce || can_leave}
+								<div class="clearfix"></div>
+								<div>
+									{if can_leave}
+										<a href="{gurl.simple_url('calendar','&amp;$URL_AT=$ACTION_CAL_LEAVE_EVENT&amp;$URL_SUB=eventdetails&amp;$URL_ID='~id,'&amp;',true)}">
+											<button role="button" class="btn btn-default">{glocale.lang('optout')}</button>
+										</a>
+									{else}
+										<a href="{gurl.simple_url('calendar','&amp;$URL_AT=$ACTION_CAL_JOIN_EVENT&amp;$URL_SUB=eventdetails&amp;$URL_ID='~id,'&amp;',true)}">
+											<button role="button" class="btn btn-default">{glocale.lang('announce')}</button>
+										</a>
+									{endif}
+								</div>
+							{endif}
+						</td>
+					</tr>
+				{endif}
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-footer text-right post-links">
+		{if display_delete_event}
+			<a href="{delete_event}" title="{glocale.lang('edit_event')}">
+				<i class="fa fa-trash"></i>
+			</a>
+		{endif}
+		{if display_edit_event}
+			<a href="{edit_event}" title="{glocale.lang('delete_event')}">
+				<i class="fa fa-edit"></i>
+			</a>
+		{endif}
+	</div>
+</div>

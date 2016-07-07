@@ -1,0 +1,24 @@
+<div class="bs_border bs_pad">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="bs_main">
+			{if debug > 0}
+			<b>{time}</b> Sek., <b>{query_count}</b> Qrys., <b>{memory}</b> Memory
+			{else}
+			&nbsp;
+			{endif}
+			</td>
+			<td class="bs_main" align="right">
+			{bs_dba_version} &middot; 
+			Powered by <a target="_blank" href="http://www.boardsolution.de">{bs_version}</a>
+			</td>
+		</tr>
+	</table>
+</div>
+
+{if debug > 1}
+{queries}
+{endif}
+
+</body>
+</html>

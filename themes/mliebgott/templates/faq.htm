@@ -1,0 +1,51 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+	{if module_error == false}
+		<div class="panel panel-default">
+			<div class="panel-heading">{glocale.lang('faq_desc')}</div>
+			<div class="panel-body">
+				<ul class="list-group">
+					{loop faq_titles as fnumber => ftitle}
+						<li class="list-group-item">
+							<a href="#f_{fnumber}">{ftitle:title}</a>
+						</li>
+					{endloop}
+				</ul>
+			</div>
+		</div>
+
+		{loop faqs as fnumber => faq}
+			<div class="col-lg-12 col-sm-12 col-xs-12 no-padding-left no-padding-right">
+				<div class="panel panel-default" id="f_{fnumber}">
+					<div class="panel-heading">{faq:title}</div>
+					<div class="panel-body">
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							{faq:text}
+						</div>
+						{if faq:show_ranks}
+							<div class="row col-lg-6 col-sm-6 col-xs-12">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td colspan="3" class="text-center"><b>{glocale.lang('userranks')}</b></td>
+										</tr>
+										{loop faq:ranks as rank}
+											<tr>
+												<td class="cell-stat"><b>{rank:title}</b></td>
+												<td class="cell-stat">{rank:points}</td>
+												<td class="cell-stat-2x text-right">{rank:image}</td>
+											</tr>
+										{endloop}
+									</tbody>
+								</table>
+							</div>
+						{endif}
+					</div>
+				</div>
+			</div>
+		{endloop}
+	{endif}
+{endif}
+
+{include "inc_footer.htm"}

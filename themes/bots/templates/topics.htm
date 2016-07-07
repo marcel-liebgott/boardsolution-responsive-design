@@ -1,0 +1,21 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+{if module_error == false}
+
+{if sub_forums}
+<div class="bs_padbottom">
+{include "inc_forums.htm"}
+</div>
+{endif}
+
+{include "inc_topics.htm"}
+
+<div class="bs_padtop">
+{include "inc_pagination.htm"}
+</div>
+
+{endif}
+{endif}
+
+{include "inc_footer.htm"}

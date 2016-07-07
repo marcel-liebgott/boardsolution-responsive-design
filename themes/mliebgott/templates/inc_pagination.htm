@@ -1,0 +1,38 @@
+{if page}
+	<div class="text-center">
+		<nav>
+			<ul class="pagination">
+				<!-- first page -->
+				<li>
+					<a href="#" aria-label="{glocale.lang('firstpage')}">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				
+				<!-- page -->
+				{loop numbers as number}
+					{if number:number == page}
+						<li class="active">
+							<a href="#">{number:number}<span class="sr-only">(current)</span></a>
+						</li>
+					{else}
+						{if number:link}
+							<li>
+								<a href="{number:link}">{number:number}</a>
+							</li>
+						{else}
+							{number:number}
+						{endif}
+					{endif}
+				{endloop}
+				
+				<!--  last page -->
+				<li>
+					<a href="#" aria-label="{glocale.lang('lastpage')}">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+{endif}

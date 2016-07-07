@@ -1,0 +1,38 @@
+<form method="post" action="{target_url}">
+	<input type="hidden" name="action_type" value="{action_type}" />
+	<div class="panel panel-default">
+		<div class="panel-heading">{glocale.lang('personal_info')}</div>
+		<div class="panel-body">
+			<div class="form-group clearfix" role="group">
+				<label class="col-sm-3 col-xs-4 control-label no-padding-left">{glocale.lang('email')}: *</label>
+				<div class="col-sm-9 col-xs-8 no-padding-left no-padding-right">
+					{if show_email}
+						<input type="text" name="user_email" size="50" maxlength="100" class="form-control" value="{email_value}" />
+						{if confirm_emails}
+							<div class="bs_desc">{glocale.lang('change_email_notice')}</div>
+							{if new_email_address}
+								<div class="bs_desc"><b>{glocale.lang('waiting_for_email_conf')}: {new_email_address}</b></div>
+							{endif}
+						{endif}
+					{else}
+						{email_value}
+					{endif}
+				</div>
+				{loop additional_fields as field}
+					<div class="col-sm-9 col-xs-8 no-padding-left no-padding-right">
+						<label class="col-sm-3 col-xs-4 control-label no-padding-left">{field:field_name}:{field:required_field}</label>
+						<div class="col-sm-9 col-xs-8 no-padding-left no-padding-right">
+							{field:field_value}
+						</div>
+						{field:field_input_name}
+					</div>
+				{endloop}
+			</div>
+		</div>
+	</div>
+	<div class="text-center">
+		<div class="btn-group" role="group">
+			<input type="submit" name="submit" class="btn btn-default" value="{glocale.lang('save')}" />
+		</div>
+	</div>
+</form>

@@ -1,0 +1,140 @@
+{if type != 'contains_cats'}
+   <div class="row">
+      <div class="col-lg-8 col-sm-8 col-xs-12">
+         <div class="panel panel-default">
+            <div class="panel-heading">{thread_title}</div>
+            <div class="panel-body">
+               <table class="table table-striped">
+                  <thead>
+                     <tr>
+                     	{if show_thread_action}
+                        	<th class="">&nbsp;</th>
+                        {endif}
+                        <th class="cell-stat text-center hidden-xs hidden-sm">&nbsp;</th>
+                        <th class="">&nbsp;</th>
+                        <th class="">&nbsp;</th>
+                        <th class="text-center cell-stat hidden-xs hidden-sm">{glocale.lang('replies')}</th>
+                        {if show_views}
+                           <th class="text-center cell-stat hidden-xs hidden-sm">{glocale.lang('views')}</th>
+                        {endif}
+                        {if show_thread_opening}
+                           <th class="text-center cell-stat-2x hidden-sm hidden-xs">{glocale.lang('topic_start')}</th>
+                        {endif}
+                        <th class="text-center cell-stat-2x hidden-xs">{glocale.lang('lastpost')}</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {if num == 0}
+                     <tr>
+                        <td colspan="{total_colspan}" align="center" class="bs_main">{glocale.lang('no_topics_found')}</td>
+                     </tr>
+                     {endif}
+                     {loop topics as index => topic}
+                        {if topic:show_important}
+                        <tr>
+                           <td colspan="{topic:important_colspan}" class="bs_coldesc">{topic:important_title}</td>
+                        </tr>
+                        {endif}
+                        <tr>
+                           {if show_thread_action}
+                           <td width="3%" align="center" class="vertical-center" onclick="var cb = document.getElementById('id_{index}'); cb.checked = cb.checked ? false : true;">
+                              <input id="id_{index}" type="checkbox" name="selected_topics[]" value="{topic:topic_id}" onclick="this.checked = this.checked ? false : true;" />
+                           </td>
+                           {endif}
+                           <td class="cell-stat text-center hidden-xs hidden-sm">
+                              <img src="{topic:topic_status:important_image}" title="{topic:topic_status:important_title}" alt="{topic:topic_status:important_title}" />
+                              <img src="{topic:topic_status:hot_image}" title="{topic:topic_status:hot_title}" alt="{topic:topic_status:hot_title}" /><br />
+                              <img src="{topic:topic_status:closed_image}" title="{topic:topic_status:closed_title}" alt="{topic:topic_status:closed_title}" />
+                              <img src="{topic:topic_status:moved_image}" title="{topic:topic_status:moved_title}" alt="{topic:topic_status:moved_title}" />
+                           </td>
+                           <td width="3%" align="center" class="bs_main">{topic:thread_pic}</td>
+                           {if show_thread_action}
+                              <td width="43%" class="bs_main">
+                           {else}
+                              <td width="46%" class="bs_main">
+                           {endif}
+                           
+                           {if topic:is_unread}
+                              <a title="{glocale.lang('goto_first_unread_post')}" href="{topic:first_unread_url}">
+                              <img src="{guser.get_theme_item_path('images/unread/first_unread_post.gif')}"
+                                 alt="{glocale.lang('goto_first_unread_post')}" />
+                              </a>
+                           {endif}
+                           {if topic:is_important}
+                              <b>{glocale.lang('important')}</b>:
+                           {endif}
+                           <a {if topic:name_complete != ''}title="{topic:name_complete}" {endif}href="{topic:topic_url}">
+                           {if topic:is_moved}
+                              <i>{topic:name}</i>
+                           {else}
+                              {topic:name}
+                           {endif}
+                           </a>
+                           {if topic:page_split}
+                              &nbsp;&nbsp;<span class="bs_desc">{topic:page_split}</span>
+                           {endif}
+                           {if topic:show_forum}
+                              <div class="bs_topics_small">{topic:forum_path}</div>
+                           {endif}
+                           {if topic:show_relevance}
+                              <div class="bs_topics_small">{glocale.lang('relevance')}: {topic:relevance}</div>
+                           {endif}
+                           </td>
+                           <td class="hidden-xs hidden-sm">
+                           {if topic:is_moved}
+                              -
+                           {else}
+                              {topic:posts}
+                           {endif}
+                           </td>
+                           {if show_views}
+                           <td class="hidden-sm hidden-xs">
+                              {if topic:is_moved}
+                                 -
+                              {else}
+                                 {topic:views}
+                              {endif}
+                           </td>
+                           {endif}
+                           {if show_thread_opening}
+                              <td class="hidden-sm hidden-xs">
+                                 {if topic:is_moved}
+                                    -
+                                 {else}
+                                    {topic:topicstart:date}<br />
+                                    {glocale.lang('From')}: {topic:topicstart:username}
+                                 {endif}
+                              </td>
+                           {endif}
+                           <td class="hidden-xs">
+                              {if topic:is_moved}
+                                 -
+                              {else}
+                                 {if topic:lastpost == false}
+                                    -
+                                 {else}
+                                    {topic:lastpost:date}<br />
+                                    {glocale.lang('From')}: {topic:lastpost:username}
+                                    <a title="{glocale.lang('gotolastpost')}" href="{topic:lastpost:url}">
+                                       <img src="{guser.get_theme_item_path('images/lastpost.gif')}" style="vertical-align: middle;" alt="{glocale.lang('gotolastpost')}" />
+                                    </a>
+                                 {endif}
+                              {endif}
+                           </td>
+                        </tr>
+                     {endloop}
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+{else}
+   {if sub_forum == false}
+      <div class="bs_border">
+         <h1 class="bs_topic">{thread_title}</h1>
+         <div class="bs_main" style="text-align: center;">
+            {glocale.lang('no_forums_available')}
+         </div>
+      </div>
+   {endif}
+{endif}

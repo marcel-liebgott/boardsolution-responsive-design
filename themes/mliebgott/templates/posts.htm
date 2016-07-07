@@ -1,0 +1,208 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+	{if module_error == false}
+		<script type="text/javascript" src="{gjs.get_file('src/quote.js')}"></script>
+	
+		{if show_event}
+			{include "inc_event.htm"}
+		{endif}
+			{if show_poll}
+				{include "inc_poll.htm"}
+		{endif}
+		<br />
+	
+		<div class="col-lg-12 col-sm-12 col-xs-12 no-padding-left no-padding-right">
+			<div class="col-lg-12 col-sm-12 col-xs-12 nopadding">
+				<div class="panel panel-default">
+					<div class="panel-heading">{thread_type_ins}: {threadname_ins}</div>
+					<div class="panel-body">
+						{if posts.length > 0}
+							{loop posts as post} 
+								<div class="row top20">
+									<div class="col-lg-2 col-sm-2 hidden-xs text-center">
+										{if post:show_avatar}
+											<a href="{post:user_link}">
+												<img alt="{post:user_name_plain}" title="{post:user_name_plain}" src="{post:avatar}" class="img-circle {if post:is_user_online}user-online{else}user-offline{endif}" />
+											</a>
+										{endif}
+										<br>
+										{post:user_name_plain}
+										<br>
+										<small>
+											{post:rank_images}{post:user_status}<br>
+											{post:stats_ins_bottom}
+										</small>
+									</div>
+										
+									<div class="col-lg-10 col-sm-10 col-xs-12 box-bordered">
+										<div class="panel panel-default">
+											<div class="panel-heading clearfix">
+												<div class="col-lg-6 col-sm-6 col-xs-6">
+													{post:post_date}
+												</div>
+												<div class="col-lg-6 col-sm-6 col-xs-6 text-right">
+													{glocale.lang('post')} <a href="{post:post_url}">#{post:number}</a>
+												</div>
+											</div>
+											<div class="panel-body">
+												{post:text_ins}
+											</div>
+											<div class="panel-footer clearfix">
+												<div class="col-lg-6 col-sm-6">&nbsp;</div>
+												<div class="col-xs-6 hidden-lg hidden-sm text-left">
+													{glocale.lang("From")}: {post:user_name}
+												</div>
+												<div class="col-lg-6 col-sm-6 col-xs-6 text-right post-links">
+													{loop post:bottom_array as key => bottom}
+														{if bottom:url}
+															<a href="{bottom:url}" title="{bottom:locale}"
+																{if key == "quote_this_post"}
+																	id="{bottom:id}"
+																	onclick="{bottom:onclick}"
+																{endif}
+															>
+																{if key == "delete_topic" || key == "delete_post"}
+																	<i class="fa fa-trash"></i>
+																{endif}
+																
+																{if key == "edit_post"}
+																	<i class="fa fa-edit"></i>
+																{endif}
+																
+																{if key == "quote_this_post"}
+																	<i class="fa fa-quote-right"></i>
+																{endif}
+															</a>
+														{endif}
+													{endloop}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{endloop}
+						{endif}
+						<div class="col-lg-12 col-ms-12 col-xs-12 text-center">
+						   {include "inc_pagination.htm"}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+		<!-- 
+		{if view_useronline_list}
+			<div class="bs_padtop_big">
+				{include "inc_online_user.htm"}
+			</div>
+		{endif}
+		-->
+		
+		{if show_bottom_bar}
+			{include "inc_topic_action_js.htm"}
+			<script type="text/javascript">
+				<!--
+				function performModAction()
+				{
+					document.location.href = getModActionURL().replace('__ID__','{tid}');
+				}
+				//-->
+			</script>
+			<div class="col-lg-12 col-sm-12 col-xs-12 no-padding-left no-padding-right">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						{glocale.lang('options')}
+					</div>
+					<div class="panel-body clearfix">
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							{if display_topic_actions}
+								<b>{glocale.lang('topic_actions')}:</b><br>
+								{topic_action_combo}
+							{else}
+								&nbsp;
+							{endif}
+						</div>
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							<b>{glocale.lang('options')}</b>
+							<br>
+							<ul class="bottom-options">
+								{if display_reply}
+									<li>
+										<div class="button-with-addon">
+											<i class="fa fa-reply"></i>
+											<a title="{glocale.lang('answer_desc')}" href="{reply_url}" onclick="return quote('{quoteLink}');">
+												<button class="btn btn-default btn-sm">
+													{glocale.lang('answer')}
+												</button>
+											</a>
+										</div>
+									</li>
+									{if gisloggedin}
+										<li>
+											<div class="button-with-addon">
+												<i class="fa fa-reply-all" class="input-group-addon"></i>
+												<a href="javascript:toggleQuickReply();" title="{glocale.lang('quick_reply_desc')}">
+													<button class="btn btn-default btn-sm">
+														{glocale.lang('quick_reply')}
+													</button>
+												</a>
+											</div>
+										</li>
+									{endif}
+								{endif}
+								
+								{if display_topic_actions}
+									<li>
+										<div class="button-with-addon">
+											<i class="fa fa-reorder" class="input-group-addon"></i>
+											<a title="{glocale.lang('print_desc')}" href="{gurl.simple_url('manage_posts','&amp;$URL_FID='~fid~'&amp;$URL_TID='~tid)">
+												<button class="btn btn-default btn-sm">
+													{manage_posts_title}
+												</button>
+											</a>
+										</div>
+									</li>
+								{endif}
+								
+								{if enable_email_notification}
+									<li>
+										<div class="button-with-addon">
+											<i class="fa fa-newspaper-o" class="input-group-addon"></i>
+											<a title="{glocale.lang('subscribe_desc')}" href="{gurl.simple_url(0,'&amp;$URL_AT=$ACTION_SUBSCRIBE_TOPIC&amp;$URL_FID='~fid~'&amp;$URL_TID='~tid,'&amp;',true)}">
+												<button class="btn btn-default btn-sm">
+													{glocale.lang('subscribe_to_topic')}
+												</button>
+											</a>
+										</div>
+									</li>
+								{endif}
+								<li>
+									<div class="button-with-addon">
+										<i class="fa fa-print" class="input-group-addon"></i>
+										<a title="{glocale.lang('print_desc')}" href="{print_url}" onclick="FWS_openDefaultPopup('{print_url}','{glocale.lang('print_topic')}',950,700); return false;">
+											<button class="btn btn-default btn-sm">
+												{glocale.lang('print_topic')}
+											</button>
+										</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		{endif}
+		
+		<!-- 
+		{if similar_topics}
+			<div class="bs_padtop_big">
+				{include "inc_topics.htm"}
+			</div>
+		{endif}
+		-->
+	{endif}
+{endif}
+
+{include "inc_footer.htm"}

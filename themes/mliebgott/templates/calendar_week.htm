@@ -1,0 +1,64 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a href="{back}">
+			<i class="fa fa-chevron-left"></i>
+		</a> 
+		{title}
+		<a href="{forward}">
+			<i class="fa fa-chevron-right"></i>
+		</a>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered calendar no-margin-bottom">
+			{loop rows as row}
+				<thead>
+					<tr>
+						{loop row:day_titles as daytitle}
+							<th>
+								{if view_add_event}
+									<div style="float: right;">
+										<a href="{gurl.simple_url(0,'&amp;$URL_SUB=editevent&amp;$URL_DAY='~daytitle:timestamp)}">
+											<i class="fa fa-plus"></i>
+										</a>
+									</div>
+								{endif}
+							{daytitle:name}
+							</th>
+						{endloop}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						{loop row:days as day}
+							<td class="calendar-day">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>
+												<div style="font-size: 1.0em;">
+													{loop day:event:bd as bd}
+													<div>
+														<i class="fa fa-birthday-cake"></i>
+														{bd:username} ({bd:age})
+													</div>
+													{endloop}
+													
+													{loop day:event:ev as ev}
+													<div>
+														<i class="fa fa-clock-o"></i>
+														<a title="{ev:name_complete}" href="{ev:url}">{ev:name}</a>
+													</div>
+													{endloop}
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						{endloop}
+					</tr>
+				{endloop}
+			</tbody>
+		</table>
+	</div>
+</div>

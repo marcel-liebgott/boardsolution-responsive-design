@@ -1,0 +1,115 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+	{if module_error == false}
+		<div class="col-lg-12 col-sm-12 col-xs-12 no-padding-left no-padding-right">
+			<ul class="nav nav-tabs" role="tablist" id="stats-tabs">
+				<li role="presentation" class="active">
+					<a href="{gurl.simple_url(0)}">
+						{glocale.lang('general')}
+					</a>
+				</li>
+				<li role="presentation">
+					<a href="{gurl.simple_url(0,'&amp;$URL_SUB=timeline')}">
+						{glocale.lang('stats_timeline')}
+					</a>
+				</li>
+			</ul>
+				
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="stats">
+					<div class="panel panel-default">
+						<div class="panel-heading">{glocale.lang('general_statistics')}</div>
+						<div class="panel-body">
+							<table class="table table-bordered table-striped">
+								<tbody>
+									<tr>
+										<td class="cell-stat"><b>{glocale.lang('forums')}:</b></td>
+										<td class="cell-stat-3x">{general:total_forums}</td>
+										<td class="cell-stat"><b>{glocale.lang('threads')}:</b></td>
+										<td class="cell-stat-3x">{general:total_topics}</td>
+									</tr>
+									<tr>
+										<td><b>{glocale.lang('logins_total')}:</b></td>
+										<td>{general:logins_total}</td>
+										<td><b>{glocale.lang('posts_total')}:</b></td>
+										<td>{general:posts_total}</td>
+									</tr>
+									<tr>
+										<td><b>{glocale.lang('logins_today')}:</b></td>
+										<td>{general:logins_today}</td>
+										<td><b>{glocale.lang('posts_today')}:</b></td>
+										<td>{general:posts_today}</td>
+									</tr>
+									<tr>
+										<td><b>{glocale.lang('logins_yesterday')}:</b></td>
+										<td>{general:logins_yesterday}</td>
+										<td><b>{glocale.lang('posts_yesterday')}:</b></td>
+										<td>{general:posts_yesterday}</td>
+									</tr>
+									<tr>
+										<td><b>{glocale.lang('lastlogin')}:</b></td>
+										<td>{general:logins_last}</td>
+										<td><b>{glocale.lang('lastpost')}:</b></td>
+										<td>{general:posts_last}</td>
+									</tr>
+									<tr>
+										<td><b>{glocale.lang('registereduser')}:</b></td>
+										<td>{general:total_users}</td>
+										<td><b>{glocale.lang('maxonline')}:</b></td>
+										<td>{general:max_online}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					{loop stats as statsdata}
+						<div class="col-lg-6 col-sm-6 col-xs-12 no-padding-left no-padding-right">
+							<div class="panel panel-default">
+								<div class="panel-heading">{statsdata:title}</div>
+								<div class="panel-body">
+									<table class="table table-bordered table-striped">
+										<tbody>
+											{if statsdata:data.length == 0}
+												<tr>
+													<td colspan="4" class="text-center">{glocale.lang('error_num')}</td>
+												</tr>
+											{endif}
+											{loop statsdata:data as row}
+												<tr>
+													<td class="cell-mini-stat text-center">{row:x_var}</td>
+													<td class="cell-stat">{if row:is_current}<b>{row:user}</b>{else}{row:user}{endif}</td>
+													<td class="cell-stat-3x vertical-center">
+														<div class="progress">
+															<div class="progress-bar" role="progressbar" data-percent="{row:img_percent}%" aria-valuenow="{row:img_percent}" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+																{row:img_percent}%
+															</div>
+														</div>
+													</td>
+													<td class="cell-stat-2x text-left">{row:text}</td>
+												</tr>
+											{endloop}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					{endloop}
+					
+					{if own_stats_image != ''}
+						<div class="col-lg-12 col-sm-12 col-xs-12 no-padding-left no-padding-right">
+							<div class="panel panel-default">
+								<div class="panel-heading">{glocale.lang('own_stats')}</div>
+								<div class="panel-body text-center">
+									<img src="{own_stats_image}" alt="{glocale.lang('own_stats')}" title="{glocale.lang('own_stats')}" />
+								</div>
+							</div>
+						</div>
+					{endif}
+				</div>
+			</div>
+	{endif}
+{endif}
+
+{include "inc_footer.htm"}

@@ -1,0 +1,92 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+	{if module_error == false}
+		<div class="col-lg-12 col-sm-12 col-xs-12 no-padding-left no-padding-right">
+			<ul class="nav nav-tabs" role="tablist" id="stats-tabs">
+				<li role="presentation">
+					<a href="{gurl.simple_url(0)}">
+						{glocale.lang('general')}
+					</a>
+				</li>
+				<li role="presentation" class="active">
+					<a href="{gurl.simple_url(0,'&amp;$URL_SUB=timeline')}">
+						{glocale.lang('stats_timeline')}
+					</a>
+				</li>
+			</ul>
+		
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="stats">
+				<div class="panel panel-default">
+					<div class="panel-heading">{glocale.lang('stats_timeline')}</div>
+					<div class="panel-body">
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th class="cell-stat text-left">{glocale.lang('periode')}</th>
+									<th class="cell-stat">{glocale.lang('posts')}</th>
+									<th class="cell-stat">{glocale.lang('threads')}</th>
+									<th class="cell-stat">{glocale.lang('user')}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{if timeline.length == 0}
+									<tr>
+										<td class="bs_main" colspan="4" align="center">{glocale.lang('no_timeline_data')}</td>
+									</tr>
+								{endif}
+								{loop timeline as year => row}
+									<tr>
+										<td>{year}</td>
+										<td class="text-center">
+											{row:total:posts},&nbsp;&nbsp;<img src="{guser.get_theme_item_path('images/avg.gif')}" alt="avg" title="avg" /> {row:avg:posts}
+										</td>
+										<td class="text-center">
+											{row:total:topics},&nbsp;&nbsp;<img src="{guser.get_theme_item_path('images/avg.gif')}" alt="avg" title="avg" /> {row:avg:topics}
+										</td>
+										<td class="text-center">
+											{row:total:user},&nbsp;&nbsp;<img src="{guser.get_theme_item_path('images/avg.gif')}" alt="avg" title="avg" /> {row:avg:user}
+										</td>
+									</tr>
+									{loop row as month => count}
+										{if month != 'total'}
+											{if month != 'avg'}
+											<tr>
+												<td>{month}</td>
+												<td>
+													<div class="progress">
+														<div class="progress-bar" role="progressbar" data-percent="{count:posts:percent}%" aria-valuenow="{count:posts:percent}" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+															{count:posts:percent}%
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="progress">
+														<div class="progress-bar" role="progressbar" data-percent="{count:topics:count}" aria-valuenow="{count:topics:count}" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+															{count:topics:count}%
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="progress">
+														<div class="progress-bar" role="progressbar" data-percent="{count:user:count}%" aria-valuenow="{count:user:count}" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+															{count:user:count}%
+														</div>
+													</div>
+												</td>
+											</tr>
+											{endif}
+										{endif}
+									{endloop}
+								{endloop}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	{endif}
+{endif}
+
+{include "inc_footer.htm"}

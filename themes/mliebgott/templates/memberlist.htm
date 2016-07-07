@@ -1,0 +1,186 @@
+{include "inc_header.htm"}
+
+{if action_result < 1}
+	{if module_error == false}
+		<div class="col-lg-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">{glocale.lang('memberlist')}</div>
+				<div class="panel-body">
+					<div class="col-lg-12 col-sm-12 col-xs-12">
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th class="cell-stat-3x">{name_col_custom}</th>
+									<th class="cell-stat-2x">{glocale.lang('email')}</th>
+									{if guserenablepm}
+										<th class="cell-stat">{glocale.lang('pm')}</th>
+									{endif}
+									{if enable_post_count}
+										<th class="cell-stat">{posts_col_custom}</th>
+									{endif}
+									<th class="cell-stat-2x">{usergroup_col_custom}</th>
+									<th class="cell-stat-2x hidden-xs">{lastlogin_col_custom}</th>
+									<th class="cell-stat-2x hidden-xs">{register_col_custom}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{if user == false}
+									<tr>
+										<td colspan="{colspan}" align="center" class="bs_main">{glocale.lang('no_user_found')}</td>
+									</tr>
+								{endif}					
+								{loop user as data}
+									<tr>
+										<td>{data:user_name}</td>
+										<td class="text-center">{data:email}</td>
+										{if guserenablepm}
+											<td class="text-center">
+												{if data:allow_pms}
+												<a style="float: none;" title="{data:send_pm_title}" class="bs_button" href="{gurl.simple_url('userprofile','&amp;$URL_SUB=pmcompose&amp;$URL_ID='~data:user_id)}">
+													<i class="fa fa-envelope"></i>
+												</a>
+												{else}
+													{glocale.lang('notavailable')}
+												{endif}
+											</td>
+										{endif}
+										{if enable_post_count}
+											<td class="text-center">{data:posts}</td>
+										{endif}
+										<td>{data:user_group}</td>
+										<td class="hidden-xs">{data:lastlogin}</td>
+										<td class="hidden-xs">{data:register_date}</td>
+									</tr>
+									{endloop}
+							</tbody>
+						</table>
+						{include "inc_pagination.htm"}
+					</div>
+				</div>
+			</div>
+			
+			<script type="text/javascript" src="{gjs.get_file('src/ajax_user_matches.js')}"></script>
+
+			<form method="get" action="{search_target}">
+				{loop hidden_fields as k => v}
+					<input type="hidden" name="{k}" value="{v}" />
+				{endloop}
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">{glocale.lang('search')}</div>
+					<div class="panel-body">
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							<h4>{glocale.lang('general')}</h4>
+							<div class="form-group">
+								<label>{glocale.lang('name')}:</label>
+								<input id="user_name_input" aria-describedby="user_name_input" autocomplete="off" type="text" size="30" maxlength="30" class="form-control" name="{name_param}" value="{name_value}" />
+							</div>
+							<div class="form-group">
+								<label>{glocale.lang('email')}:</label>
+								<input id="user_email_input" aria-describedby="user_email_input" autocomplete="off" type="text" size="30" maxlength="30" class="form-control" name="{email_param}" value="{email_value}" />
+							</div>
+							<div class="form-group">
+								<label>{glocale.lang('group')}:</label>
+								<select class="form-control" id="msg__" aria-describedby="user_group_input" name="msg[]" size="{sum_user_groups}" multiple="multiple">
+									{loop user_group_combo_array as gid => gname}
+										<option value="{gid}"
+										{loop selected_user_groups as sgid}
+											{if gid == sgid}
+												selected="selected"
+											{endif}
+										{endloop}
+										>{gname}</option>
+									{endloop}
+								</select>
+							</div>
+							<div class="form-group">
+								<label>{glocale.lang('just_moderators')}:</label>
+								<br>
+								<div class="btn-group" data-toggle-name="just_moderator" data-input-name="msm_">
+									<button type="button" value="1" class="btn" data-toggle="button">{glocale.lang('yes')}</button>
+									<button type="button" value="0" class="btn" data-toggle="button" autofocus="true">{glocale.lang('no')}</button>
+									<input type="hidden" id="just_moderator" name="msm_0" value="0">
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							<h4>{glocale.lang('activity')}</h4>
+							<div class="form-group">
+								<label>{glocale.lang('posts')}:</label>
+								<div class="input-group">
+									<span class="input-group-addon" id="user_posts_from_input">{glocale.lang('From')}</span>
+									<input id="user_posts_from_input" aria-describedby="user_posts_from_input" autocomplete="off" type="text" size="5" maxlength="10" class="form-control" name="{from_posts_param}" value="{from_posts_value}" />
+									<span class="input-group-addon" id="user_posts_to_input">{glocale.lang('to')}</span>
+									<input id="user_posts_to_input" aria-describedby="user_posts_to_input" autocomplete="off" type="text" size="5" maxlength="10" class="form-control" name="{to_posts_param}" value="{to_posts_value}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label>{glocale.lang('points')}:</label>
+								<div class="input-group">
+									<span class="input-group-addon" id="user_points_from_input">{glocale.lang('From')}</span>
+									<input id="user_points_from_input" aria-describedby="user_points_from_input" autocomplete="off" type="text" size="5" maxlength="10" class="form-control" name="{from_points_param}" value="{from_points_value}" />
+									<span class="input-group-addon" id="user_points_to_input">{glocale.lang('to')}</span>
+									<input id="user_points_to_input" aria-describedby="user_points_to_input" autocomplete="off" type="text" size="5" maxlength="10" class="form-control" name="{to_points_param}" value="{to_points_value}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label>{glocale.lang('registeredsince')}:</label>
+								<div class="input-group">
+									<span class="input-group-addon" id="user_register_between_input">{glocale.lang('between')}</span>
+									<input id="user_registered_between_input" aria-describedby="user_register_between_input" autocomplete="off" name="msfr" type="text" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9][0-9][0-9][0-9]" class="form-control" name="{from_reg_param}" value="{from_reg_value}" />
+									<span class="input-group-addon" id="user_registered_and_input">{glocale.lang('and')}</span>
+									<input id="user_registered_and_input" aria-describedby="user_registered_and_input" autocomplete="off" name="mstr" type="text" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9][0-9][0-9][0-9]" class="form-control" name="{to_reg_param}" value="{to_reg_value}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label >{glocale.lang('lastlogin')}:</label>
+								<div class="input-group">
+									<span class="input-group-addon" id="user_last_login_between_input">{glocale.lang('between')}</span>
+									<input id="user_last_login_between_input" aria-describedby="user_last_login_between_input" autocomplete="off" name="msfl" type="text" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9][0-9][0-9][0-9]" class="form-control" name="{from_lastlogin_param}" value="{from_lastlogin_value}" />
+									<span class="input-group-addon" id="user_last_login_and_input">{glocale.lang('and')}</span>
+									<input id="user_last_login_and_input" aria-describedby="user_last_login_and_input" autocomplete="off" name="mstl" type="text" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9][0-9][0-9][0-9]" class="form-control" name="{to_lastlogin_param}" value="{to_lastlogin_value}" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-12 col-sm-12 col-xs-12 text-center">
+							<input class="btn btn-default" type="button" value="{glocale.lang('reset')}" onclick="document.location.href = '{reset_url}';" />
+							<input class="btn btn-default" type="submit" value="{glocale.lang('search')}" />
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<script type="text/javascript">
+			<!--
+			new BS_AJAXUserSearch('{gpath}','user_name_input','{action_param}','{glocale.lang('matching_user')}',
+				'{guser.get_theme_item_path("images/wait.gif")}',false);
+			//-->
+			
+			$(document).ready(function($){
+				 $('div.btn-group[data-toggle-name]').each(function(){
+					var group = $(this);
+					var form = group.parents('form').eq(0);
+					var name = group.attr('data-toggle-name');
+					var hidden_input_name = group.attr('data-input-name');
+					var hidden = $('input[id="' + name + '"]', form);
+					
+					$('button', group).each(function(){
+						var button = $(this);
+						button.on('click', function(){
+							hidden.val($(this).val());
+							hidden.attr('name', hidden_input_name + $(this).val());
+						});
+						
+						if(button.val() == hidden.val()){
+							button.addClass('active');
+						}
+					});
+				});
+			});
+			</script>
+		</div>
+	{endif}
+{endif}
+
+{include "inc_footer.htm"}

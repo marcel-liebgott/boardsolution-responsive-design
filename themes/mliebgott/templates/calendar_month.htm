@@ -1,0 +1,87 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a href="{back}">
+			<i class="fa fa-chevron-left"></i>
+		</a> 
+		{title}
+		<a href="{forward}">
+			<i class="fa fa-chevron-right"></i>
+		</a>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered calendar no-margin-bottom">
+			<thead>
+				<tr>
+					<th class="cell-mini-stat text-left"></th>
+					<th class="cell-stat-2x text-center">{wd_detail:0}</th>
+					<th class="cell-stat-2x text-center">{wd_detail:1}</th>
+					<th class="cell-stat-2x text-center">{wd_detail:2}</th>
+					<th class="cell-stat-2x text-center">{wd_detail:3}</th>
+					<th class="cell-stat-2x text-center">{wd_detail:4}</th>
+					<th class="cell-stat-2x text-center">{wd_detail:5}</th>
+					<th class="cell-stat-2x text-center">{wd_detail:6}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop weeks as week}
+					<tr>
+						<td class="vertical-center calendar-week-arrow" onmouseover="this.style.cursor='pointer';" onmouseout="this.style.cursor='default';" onclick="document.location.href='{week:url}'">
+							<a href="{week:url}"><i class="fa fa-chevron-right"></i></a>
+						</td>
+						{loop week:days as day}
+							{if day:isempty}
+								<td>&nbsp;</td>
+							{else}
+								<td class="calendar-day">
+									<table class="table">
+										<tbody>
+											<tr>
+												<td class="calendar-day-desc">
+													{if view_add_event}
+														<div style="float: right;">
+															<a href="{gurl.simple_url(0,'&amp;$URL_SUB=editevent&amp;$URL_DAY='~day:timestamp)}">
+																<i class="fa fa-plus" alt="+" title="{glocale.lang('add_event')}"></i>
+															</a>
+														</div>
+													{endif}
+													<span class="text-muted">{day:day}</span>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<div>
+														{if day:event:bd.length == 0 && day:event:ev.length == 0}
+															&nbsp;
+														{else}
+															{loop day:event:bd as bd}
+																<div>
+																	<i class="fa fa-birthday-cake"></i>
+																	{bd:username} ({bd:age})
+																</div>
+															{endloop}
+															
+															{loop day:event:ev as ev}
+																<div>
+																	<i class="fa fa-clock-o"></i>
+																	<a title="{ev:name_complete}" href="{ev:url}">{ev:name}</a>
+																</div>
+															{endloop}
+															
+															{if day:event:toomany != ''}
+																<div><a href="{d:event:toomany}">...</a></div>
+															{endif}
+														{endif}
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							{endif}
+						{endloop}
+					</tr>
+				{endloop}
+			</tbody>
+		</table>
+	</div>
+</div>

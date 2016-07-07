@@ -1,0 +1,52 @@
+{js_script}
+
+<form method="post" action="{target_url}">
+	<input type="hidden" name="action_type" value="{action_type}" />
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			{if enable_username_change}
+				{glocale.lang('user_n_pw_change')}
+			{else}
+				{glocale.lang('pw_change')}
+			{endif}
+		</div>
+		<div class="panel-body">
+			{if enable_username_change}
+				<div class="form-group clearfix" role="group">
+					<label class="col-sm-3 col-xs-4 control-label no-padding-left">{glocale.lang('name')}:</label>
+					<div class="col-sm-9 col-xs-8 no-padding-left no-padding-right">
+						<input type="text" id="user_name" name="user_name" size="{user_name_size}" maxlength="{user_name_maxlength}" class="form-control" value="admin">
+						{if max_changes_notice}
+							<span class="text-muted">{max_changes_notice}</span>
+						{endif}
+					</div>
+				</div>
+			{endif}
+			<div class="form-group clearfix" role="group">
+				<label class="col-sm-3 col-xs-4 control-label no-padding-left">{glocale.lang('oldpw')}:</label>
+				<div class="col-sm-9 col-xs-8 no-padding-left no-padding-right">
+					<input type="password" id="current_password" name="current_password" class="form-control" size="{password_size}" value="" maxlength="{password_maxlength}">
+				</div>
+			</div>
+			<div class="form-group clearfix" role="group">
+				<label class="col-sm-3 col-xs-4 control-label no-padding-left">{glocale.lang('newpw')}:</label>
+				<div class="col-sm-9 col-xs-8 no-padding-left no-padding-right">
+					<input id="pw_field" type="password" name="new_password" size="{password_size}" class="form-control"
+								maxlength="{password_maxlength}" onkeyup="show_pw_complexity('pw_field','pw_complexity_notice');" />
+						<span class="text-muted" id="pw_complexity_notice"></span>
+				</div>
+			</div>
+			<div class="form-group clearfix" role="group">
+				<label class="col-sm-3 col-xs-4 control-label no-padding-left">{glocale.lang('newpw')}:</label>
+				<div class="col-sm-9 col-xs-8 no-padding-left no-padding-right">
+					<input type="password" name="new_password_conf" size="{password_size}" maxlength="{password_maxlength}" class="form-control"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="text-center">
+		<div class="btn-group" role="group">
+			<input type="submit" name="submit" class="btn btn-default" value="{glocale.lang('save')}" />
+		</div>
+	</div>
+</form>
