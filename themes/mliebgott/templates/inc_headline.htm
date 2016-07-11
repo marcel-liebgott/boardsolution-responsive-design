@@ -10,7 +10,6 @@
 
 <div class="">
 	<div>
-		</header>
 		<div class="bs_headline" onclick="document.location.href = '{headline_url}';"></div>
 			<nav class="navbar navbar-default">
 				<div class="navbar-header">
@@ -32,7 +31,31 @@
 						{endloop}
 					</ul>
 					
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right hidden-xs">
+						{if enable_portal}
+							<li>
+								<a href="{gurl.build_portal_url()}" title="{unread_news_title}" class="clearfix">
+									<i class="fa fa-home fa-1-6x">
+										{if unread_news_count > 0}
+											<span style="float: right;" class="badge user-headline-notification-badge">{unread_news_count}</span>
+										{endif}
+									</i>
+								</a>
+							</li>
+						{endif}
+						
+						{if gisloggedin}
+							<li>
+								<a href="{gurl.simple_url('userprofile','&amp;$URL_SUB=pmoverview')}">
+									<i class="fa fa-envelope fa-1-6x headline-icon">
+										{if unread_pm_count > 0}
+											<span class="badge user-headline-notification-badge">{unread_pm_count}</span>
+										{endif}
+									</i>
+								</a>
+							</li>
+						{endif}
+						
 						<li class="dropdown">
 							{if gisloggedin}
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -44,7 +67,7 @@
 								</a>
 								<ul class="dropdown-menu nav-user-element">
 									<li class="text-center top10">
-										<a href="{guser_url}">
+										<a href="{guser_url}" class="clearfix">
 											{if guser_avatar == glocale.lang('nopictureavailable')}
 												{gusername_plain}
 											{else}
