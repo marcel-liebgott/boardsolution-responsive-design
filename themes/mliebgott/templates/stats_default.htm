@@ -64,7 +64,11 @@
 						</div>
 					</div>
 
-					{loop stats as statsdata}
+					{loop stats as index => statsdata}
+						{if index % 2 != 0}
+							<div class="row">
+						{endif}
+						
 						<div class="col-lg-6 col-sm-6 col-xs-12 no-padding-left no-padding-right">
 							<div class="panel panel-default">
 								<div class="panel-heading">{statsdata:title}</div>
@@ -95,6 +99,10 @@
 								</div>
 							</div>
 						</div>
+						
+						{if index % 2 != 0}
+							</div>
+						{endif}
 					{endloop}
 					
 					{if own_stats_image != ''}
